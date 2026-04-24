@@ -1,0 +1,383 @@
+/* Frühblüher im Ebsdorfergrund — Broschüren-Stil
+   Warme Brauntöne, klassische Typografie, ruhige Struktur.
+*/
+
+:root {
+  --braun-dunkel: #5a3a24;
+  --braun-mittel: #8b5a3c;
+  --braun-warm:   #a67952;
+  --braun-hell:   #c9a987;
+  --beige-hell:   #f7f0e4;
+  --beige-mittel: #efe4cf;
+  --beige-dunkel: #e8dcc4;
+  --papier:       #fbf6ed;
+  --text:         #3b2a1c;
+  --text-leise:   #6b5340;
+  --linie:        #c9a987;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--papier);
+  color: var(--text);
+  font-family: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Palatino, 'Noto Serif', Georgia, serif;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* --- Layout --- */
+.wrap       { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+.wrap-narrow{ max-width: 820px;  margin: 0 auto; padding: 0 24px; }
+
+/* --- Kopfzeile --- */
+header.top {
+  background: var(--braun-dunkel);
+  color: var(--beige-hell);
+  padding: 28px 0 24px;
+  border-bottom: 4px double var(--braun-warm);
+}
+header.top h1 {
+  margin: 0;
+  font-size: 2.1rem;
+  font-weight: normal;
+  letter-spacing: 0.02em;
+}
+header.top .untertitel {
+  font-style: italic;
+  color: var(--braun-hell);
+  margin-top: 4px;
+  font-size: 1.05rem;
+}
+header.top .autor {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: var(--braun-hell);
+}
+header.top a { color: var(--beige-hell); text-decoration: none; border-bottom: 1px dotted var(--braun-hell);}
+header.top a:hover { color: #fff; }
+
+/* --- Einleitung --- */
+.intro {
+  padding: 32px 0 8px;
+  color: var(--text);
+}
+.intro p { margin: 0.6em 0; }
+
+/* --- Filterbereich --- */
+.filter {
+  background: var(--beige-mittel);
+  border: 1px solid var(--linie);
+  border-radius: 6px;
+  padding: 18px 20px;
+  margin: 20px 0 28px;
+}
+.filter h2 {
+  margin: 0 0 12px;
+  font-size: 1.1rem;
+  color: var(--braun-dunkel);
+  font-weight: normal;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: baseline;
+  margin: 10px 0;
+}
+.filter-label {
+  font-weight: bold;
+  color: var(--braun-dunkel);
+  min-width: 110px;
+  font-size: 0.95rem;
+}
+.chip {
+  display: inline-block;
+  padding: 6px 14px;
+  border: 1px solid var(--braun-hell);
+  border-radius: 20px;
+  background: var(--papier);
+  color: var(--braun-dunkel);
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.92rem;
+  transition: background .15s, color .15s;
+}
+.chip:hover { background: var(--beige-dunkel); }
+.chip.aktiv {
+  background: var(--braun-mittel);
+  color: #fff;
+  border-color: var(--braun-mittel);
+}
+
+/* Farbchips — kleiner farbiger Punkt vor dem Namen */
+.chip.farbe::before {
+  content: '';
+  display: inline-block;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+  border: 1px solid rgba(0,0,0,0.2);
+}
+.chip.farbe[data-farbe="weiß"]::before   { background: #fff; }
+.chip.farbe[data-farbe="gelb"]::before   { background: #f7c624; }
+.chip.farbe[data-farbe="rosa"]::before   { background: #e9a0b8; }
+.chip.farbe[data-farbe="rot"]::before    { background: #c13f3f; }
+.chip.farbe[data-farbe="violett"]::before{ background: #8c5aa3; }
+.chip.farbe[data-farbe="blau"]::before   { background: #3a6aa0; }
+
+.zaehler {
+  margin-top: 8px;
+  color: var(--text-leise);
+  font-size: 0.92rem;
+  font-style: italic;
+}
+.reset {
+  background: transparent;
+  border: none;
+  color: var(--braun-mittel);
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 0.9rem;
+  margin-left: 6px;
+}
+.reset:hover { color: var(--braun-dunkel); }
+
+/* --- Kartengitter --- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 20px;
+  padding: 6px 0 40px;
+}
+.card {
+  background: var(--papier);
+  border: 1px solid var(--linie);
+  border-radius: 4px;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  transition: transform .2s, box-shadow .2s;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(90,58,36,0.18);
+}
+.card .tafel-wrap {
+  aspect-ratio: 4 / 3;
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card .tafel-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.card .card-body {
+  padding: 12px 14px 14px;
+  border-top: 1px solid var(--beige-dunkel);
+}
+.card .deutsch {
+  font-weight: bold;
+  font-size: 1.05rem;
+  color: var(--braun-dunkel);
+}
+.card .wiss {
+  font-style: italic;
+  color: var(--text-leise);
+  font-size: 0.9rem;
+  margin-top: 2px;
+}
+.card .meta {
+  margin-top: 8px;
+  font-size: 0.82rem;
+  color: var(--text-leise);
+}
+.card .bluehzeit {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: var(--beige-dunkel);
+  color: var(--braun-dunkel);
+  margin-right: 4px;
+}
+.card .farbenpunkte { display: inline-flex; gap: 4px; vertical-align: middle; margin-left: 6px; }
+.farb-punkt {
+  display: inline-block;
+  width: 12px; height: 12px; border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.2);
+}
+.farb-punkt[data-farbe="weiß"]   { background: #fff; }
+.farb-punkt[data-farbe="gelb"]   { background: #f7c624; }
+.farb-punkt[data-farbe="rosa"]   { background: #e9a0b8; }
+.farb-punkt[data-farbe="rot"]    { background: #c13f3f; }
+.farb-punkt[data-farbe="violett"]{ background: #8c5aa3; }
+.farb-punkt[data-farbe="blau"]   { background: #3a6aa0; }
+
+.leer {
+  text-align: center;
+  color: var(--text-leise);
+  padding: 40px 0;
+  font-style: italic;
+}
+
+/* --- Artdetail --- */
+.back {
+  display: inline-block;
+  margin: 18px 0 0;
+  color: var(--braun-mittel);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+.back:hover { color: var(--braun-dunkel); }
+
+.art-kopf {
+  text-align: center;
+  padding: 30px 0 16px;
+  border-bottom: 1px solid var(--linie);
+}
+.art-kopf .nummer {
+  display: inline-block;
+  color: var(--braun-warm);
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.art-kopf h1 {
+  margin: 4px 0 0;
+  font-size: 2.1rem;
+  color: var(--braun-dunkel);
+  font-weight: normal;
+}
+.art-kopf .wiss {
+  font-style: italic;
+  color: var(--text-leise);
+  font-size: 1.1rem;
+  margin-top: 4px;
+}
+.art-kopf .tagline {
+  margin-top: 14px;
+  font-size: 1.05rem;
+  color: var(--text);
+  font-style: italic;
+}
+
+.tafel-box {
+  margin: 28px auto 20px;
+  background: #fff;
+  padding: 18px;
+  border: 1px solid var(--linie);
+  border-radius: 4px;
+  text-align: center;
+}
+.tafel-box img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.steckbrief {
+  background: var(--beige-mittel);
+  border-left: 4px solid var(--braun-mittel);
+  padding: 18px 22px;
+  margin: 24px 0;
+  border-radius: 0 4px 4px 0;
+}
+.steckbrief h2 {
+  margin: 0 0 12px;
+  font-size: 1.15rem;
+  color: var(--braun-dunkel);
+  font-weight: normal;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.steckbrief dl { margin: 0; }
+.steckbrief dt {
+  font-weight: bold;
+  color: var(--braun-dunkel);
+  margin-top: 8px;
+}
+.steckbrief dd {
+  margin: 2px 0 0;
+  color: var(--text);
+}
+
+.fotos-galerie {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+  margin: 24px 0;
+}
+.fotos-galerie img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--linie);
+  border-radius: 4px;
+  background: #fff;
+}
+
+.sektion {
+  margin: 26px 0;
+}
+.sektion h3 {
+  color: var(--braun-dunkel);
+  font-size: 1.25rem;
+  font-weight: normal;
+  margin: 0 0 8px;
+  border-bottom: 1px solid var(--beige-dunkel);
+  padding-bottom: 4px;
+}
+.sektion p { margin: 0.5em 0; }
+
+.merksaetze h2 {
+  color: var(--braun-dunkel);
+  font-size: 1.15rem;
+  font-weight: normal;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 30px 0 12px;
+  border-top: 2px solid var(--linie);
+  padding-top: 18px;
+}
+.merksatz {
+  background: var(--beige-hell);
+  padding: 12px 18px;
+  border-radius: 4px;
+  margin: 10px 0;
+}
+.merksatz .titel {
+  font-weight: bold;
+  color: var(--braun-dunkel);
+}
+.merksatz .text { margin-top: 4px; }
+
+/* --- Fußzeile --- */
+footer.bottom {
+  background: var(--beige-mittel);
+  border-top: 4px double var(--braun-warm);
+  margin-top: 40px;
+  padding: 22px 0;
+  color: var(--text-leise);
+  font-size: 0.9rem;
+  text-align: center;
+}
+footer.bottom a { color: var(--braun-mittel); }
+
+@media (max-width: 600px) {
+  body { font-size: 17px; }
+  .wrap, .wrap-narrow { padding: 0 16px; }
+  header.top h1 { font-size: 1.7rem; }
+  .art-kopf h1 { font-size: 1.7rem; }
+  .filter-label { min-width: 0; width: 100%; margin-bottom: 4px; }
+}
